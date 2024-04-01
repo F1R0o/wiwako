@@ -1,0 +1,19 @@
+{% extends "wiwako/base.html" %}
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ wiwaka.saxeli_qartulad }}</h1>
+                <h1 class="card-title">{{ wiwaka.saxeli_inglisurad }}</h1>
+                <p class="card-text">Agwera: {{ wiwaka.agwera }}</p>
+                <p class="card-text">Fasi: {{ wiwaka.fasi }}</p>
+                {% if wiwaka.photo %}
+                <img src="{{ wiwaka.photo.url }}" class="card-img-top" alt="Post Image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

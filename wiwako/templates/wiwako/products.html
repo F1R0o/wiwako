@@ -1,0 +1,42 @@
+{% extends "wiwako/base.html" %}
+
+{% block content %}
+<div class="row">
+    {% for product in wiwaka %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <a href="{% url 'IND-WIWAKA' id=product.id %}">
+                <img src="{{ product.photo.url }}" class="card-img-top" alt="Product Image">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'IND-WIWAKA' id=product.id %}">{{ product.saxeli_qartulad }}</a>
+                </h5>
+                <p class="card-text">Fasi: {{ product.fasi }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="pagination">
+    <ul class="pagination">
+        {% if wiwaka.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ wiwaka.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">
+                Page {{ wiwaka.number }} of {{ wiwaka.paginator.num_pages }}.
+            </span>
+        </li>
+
+        {% if wiwaka.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ wiwaka.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ wiwaka.paginator.num_pages }}">last &raquo;</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
