@@ -4,14 +4,29 @@
 <div class="container">
     <h1>Welcome to our store</h1>
     
-    <form method="GET" action="{% url 'search_results' %}">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" name="query" placeholder="Search products">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Search</button>
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="GET" action="{% url 'search_results' %}" class="mb-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="query" placeholder="Search products">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+        <div class="col-md-6">
+            <form method="GET" action="{% url 'PRODUCTS' %}" class="mb-3">
+                <select class="form-control" name="category">
+                    <option value="">All Categories</option>
+                    <option value="Წიწაკა">Წიწაკა</option>
+                    <option value="ჯუჯა პომიდორი">ჯუჯა პომიდორი</option>
+                    <option value="	ბაზილიკი">	ბაზილიკი</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Filter by Category</button>
+            </form>
+        </div>
+    </div>
 
     <div class="row">
         {% for product in wiwaka %}
@@ -30,5 +45,7 @@
         </div>
         {% endfor %}
     </div>
+
+  
 </div>
 {% endblock %}
