@@ -19,7 +19,7 @@
             <form method="GET" action="{% url 'PRODUCTS' %}" class="mb-3">
                 <select class="form-control" name="category">
                     <option value="">All Categories</option>
-                    <option value="Წიწაკა">Წიწაკა</option>
+                    <option value="წიწაკა">Წიწაკა</option>
                     <option value="ჯუჯა პომიდორი">ჯუჯა პომიდორი</option>
                     <option value="	ბაზილიკი">	ბაზილიკი</option>
                 </select>
@@ -28,7 +28,34 @@
         </div>
     </div>
 
-    <div class="row">
+   
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            {% for carousel_item in carousel_items %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <a href="{% url 'IND-WIWAKA' id=carousel_item.wiwako.id %}">
+                    <img src="{{ carousel_item.photo.url }}" class="d-block w-100 carousel-image" alt="Carousel Image">
+                </a>
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{ carousel_item.title }}</h5>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Previous and Next Controls -->
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <div class="row mt-4">
         {% for product in wiwaka %}
         <div class="col-md-4 mb-4">
             <div class="card">
@@ -45,7 +72,5 @@
         </div>
         {% endfor %}
     </div>
-
-  
 </div>
 {% endblock %}

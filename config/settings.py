@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wiwako',
     'categories',
+    'carousel',
     'rest_framework',
 ]
 

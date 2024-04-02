@@ -17,12 +17,4 @@ class Wiwako(models.Model):
         return self.saxeli_qartulad
     
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        if self.photo:
-            img = Image.open(self.photo.path)
-            if img.height > 500 or img.width > 500:
-                output_size = (500, 500)
-                img.thumbnail(output_size)
-                img.save(self.photo.path)
+   
