@@ -67,10 +67,22 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework import status
 from .models import Wiwako
 from .serializers import WiwakoSerializer
 from django.db.models import Q
+from rest_framework.views import APIView
+
+
+
+
+class CarouselAPIView(APIView):
+    serializer_class = WiwakoSerializer
+
+    def get(self, request):
+        carousel_items = Wiwako.objects.all()[:3]
+        serializer = self.serializer_class(carousel_items, many=True)
+        return Response(serializer.data)
+
 
 class HomeAPIView(ListAPIView):
     serializer_class = WiwakoSerializer
@@ -78,9 +90,16 @@ class HomeAPIView(ListAPIView):
     def get_queryset(self):
         return Wiwako.objects.all()[:3]
 
+
+
+class Pagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 class ProductPageAPIView(ListAPIView):
     serializer_class = WiwakoSerializer
-    pagination_class = PageNumberPagination
+    pagination_class = Pagination
 
     def get_queryset(self):
         category_name = self.request.GET.get('category')
@@ -93,7 +112,7 @@ class ProductPageAPIView(ListAPIView):
 
 class SearchResultsAPIView(ListAPIView):
     serializer_class = WiwakoSerializer
-    pagination_class = PageNumberPagination
+    pagination_class = Pagination
 
     def get_queryset(self):
         query = self.request.GET.get('query')
