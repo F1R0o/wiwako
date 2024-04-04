@@ -66,12 +66,13 @@
 
 from rest_framework.generics import ListAPIView
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
+# from rest_framework.response import Response
 from .models import Wiwako
 from carousel.models import CarouselItem
 from .serializers import WiwakoSerializer, CarouselItemSerializer
 from django.db.models import Q
-from rest_framework.views import APIView
+from rest_framework.generics import RetrieveAPIView
+# from rest_framework.views import APIView
 
 
 
@@ -93,22 +94,29 @@ class CarouselApi(ListAPIView):
     queryset = CarouselItem.objects.all()
     serializer_class = CarouselItemSerializer
 
-
+class WiwakoDetailAPIView(RetrieveAPIView):
+    queryset = Wiwako.objects.all()
+    serializer_class = WiwakoSerializer
+    lookup_field = 'id'
 
 
 class ProductPageAPIView(ListAPIView):
-     serializer_class = WiwakoSerializer
-     pagination_class = Pagination
+    serializer_class = WiwakoSerializer
+    pagination_class = Pagination
 
-     def get_queryset(self):
-         category_name = self.request.GET.get('category')
-         queryset = Wiwako.objects.all().order_by("-id")
+    def get_queryset(self):
+        category_name = self.request.GET.get('category')
+        price_range = self.request.GET.get("price")
+        queryset = Wiwako.objects.all().order_by("-id")
         
-         if category_name:
-             queryset = queryset.filter(category__name=category_name)
+        if category_name:
+            queryset = queryset.filter(category__name=category_name)
         
-         return queryset
-
+        if price_range:
+            min_price, max_price = map(float, price_range.split('-'))
+            queryset = queryset.filter(fasi__gte=min_price, fasi__lte=max_price).order_by("-fasi")
+        
+        return queryset
 
 class SearchResultsAPIView(ListAPIView):
      serializer_class = WiwakoSerializer

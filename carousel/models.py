@@ -24,4 +24,4 @@ class CarouselItem(models.Model):
                 img.save(self.photo.path)
 
     def get_redirect_url(self):
-        return f"{self.wiwako.id}/"
+        return f"products/{self.wiwako.id}/"
