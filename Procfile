@@ -1,1 +1,1 @@
-web: config.wsgi:application --log-file -
+web: python manage.py runserver 8080
